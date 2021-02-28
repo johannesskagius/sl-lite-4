@@ -62,7 +62,7 @@ public class A3 {
             open.remove ( 0 );
         }
     }
-
+//test
 
     public void getRoute2 (Node start,Node end) {
         Queue<Node> openSet = new PriorityQueue<> ();
