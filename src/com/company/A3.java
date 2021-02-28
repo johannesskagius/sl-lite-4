@@ -68,7 +68,7 @@ public class A3 {
         Queue<Node> openSet = new PriorityQueue<> ();
         openSet.offer ( start );
         Map<Node, Node> cameFrom = new HashMap<> ();
-        final Duration defaultValue = Duration.ofHours ( 3 );
+        final Duration defaultValue = Duration.ofHours ( 100 ); // Should be infinity
 
         //Gscore is the cost of the cheapest path from start to n currently known
         Map<Node, Duration> gScore = new HashMap<> ();
@@ -84,7 +84,7 @@ public class A3 {
         while (!openSet.isEmpty ()) {
             current = openSet.peek ();
             if (current.equals ( end )) {
-                reconstructPath ( cameFrom,current );
+                reconstructPath ( cameFrom,current, end );
             }
             openSet.poll ();
             Duration tentative_gScore;
@@ -92,7 +92,7 @@ public class A3 {
             for (Map.Entry<Bow, Duration> c : connectedNodes.entrySet ()) {
                 tentative_gScore = gScore.get ( current ).plus ( c.getValue () );
                 //if true the this path is better than the previous
-                if (tentative_gScore.compareTo ( gScore.getOrDefault ( c.getKey ().getConnectedTo (),Duration.ofHours ( 3 ) ) ) < 0) {
+                if (tentative_gScore.compareTo ( gScore.getOrDefault ( c.getKey ().getConnectedTo (),defaultValue ) ) < 0) {
                     cameFrom.put ( c.getKey ().getConnectedTo (),current );
                     // if(gScore.containsKey ( c.getKey ().getConnectedTo () )){}
                     gScore.put ( c.getKey ().getConnectedTo (),tentative_gScore );
@@ -106,12 +106,13 @@ public class A3 {
         }
     }
 
-    public void reconstructPath (Map<Node, Node> cameFrom,Node current) {
+    public void reconstructPath (Map<Node, Node> cameFrom,Node current, Node end) {
         LinkedList<Node> route = new LinkedList<> ();
         while (cameFrom.containsKey ( current )) {
             current = cameFrom.get ( current );
             route.add ( current );
         }
+        route.add ( end );
         System.out.println (route);
     }
 
