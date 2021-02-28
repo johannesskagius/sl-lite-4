@@ -15,11 +15,6 @@ public class Main {
         m.test();
     }
 
-    /*
-    * Stationer som inte fungerar
-    * Lidingö baggeby station
-    *
-    * */
 
     private void test () {
         Route r = new Route ();
