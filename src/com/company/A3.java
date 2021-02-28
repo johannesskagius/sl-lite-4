@@ -19,9 +19,9 @@ public class A3 {
         open.add ( start );
         Node current = null;
         while (open.size () != 0) { //fixa en redan sorterad lista
-            try{
+            try {
                 Collections.sort ( open );
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace ();
             }
 
@@ -38,11 +38,12 @@ public class A3 {
                 costToSuccessor = currentSuccessor.getKey ().getConnectedTo ().calcHeuristicLength ( end ).plus ( currentSuccessor.getValue () );
                 //Duration costToSuccessor = currentSuccessor.getKey ().getWeight ().plus ( calcHeuristicCostToEnd ( currentSuccessor.getKey (), end ) );
                 currentsSuccessor.setHeuristicDistance ( costToSuccessor );
-                if(currentsSuccessor.equals ( end )){
+                if (currentsSuccessor.equals ( end )) {
                     break;
                 }
                 if (open.contains ( currentsSuccessor )) {
-                    if (currentsSuccessor.getHeuristicDistance ().compareTo ( costToSuccessor ) <= 0) continue; // den här måste vara fel
+                    if (currentsSuccessor.getHeuristicDistance ().compareTo ( costToSuccessor ) <= 0)
+                        continue; // den här måste vara fel
                 } else if (closed.containsKey ( currentsSuccessor )) {
                     //if g(node_successor) ≤ successor_current_cost continue (to line 20)
                     if (currentsSuccessor.getHeuristicDistance ().compareTo ( costToSuccessor ) <= 0) {
@@ -55,15 +56,15 @@ public class A3 {
                 } else {
                     open.add ( currentsSuccessor );
                 }
-                currentsSuccessor.setCost ( currentsSuccessor.getCost (currentSuccessor.getKey ()) ) ;
+                currentsSuccessor.setCost ( currentsSuccessor.getCost ( currentSuccessor.getKey () ) );
             }
-            closed.put ( current, costToSuccessor );
+            closed.put ( current,costToSuccessor );
             open.remove ( 0 );
         }
     }
 
 
-    public void getRoute2 (Node start, Node end){
+    public void getRoute2 (Node start,Node end) {
         Queue<Node> openSet = new PriorityQueue<> ();
         openSet.offer ( start );
         Map<Node, Node> cameFrom = new HashMap<> ();
@@ -71,43 +72,43 @@ public class A3 {
 
         //Gscore is the cost of the cheapest path from start to n currently known
         Map<Node, Duration> gScore = new HashMap<> ();
-        gScore.put ( start, Duration.ZERO );
+        gScore.put ( start,Duration.ZERO );
 
         //fScore for node n, fScore(n) = gScore(n)+h(n) or the heuristic cost of n.
         // fScore represent our current best guess as to how short a path from start to finish can be
         //Default value infinity
         Map<Node, Duration> fScore = new HashMap<> ();
-        fScore.put ( start, Duration.ofMinutes ( 2 ));
+        fScore.put ( start,Duration.ofMinutes ( 2 ) );
         Node current = null;
-        while (!openSet.isEmpty ()){
-            current = openSet.poll ();
-            if(current.equals ( end )){
-                reconstructPath ( cameFrom, current );
+        int i = 0;
+        while (!openSet.isEmpty ()) {
+            current = openSet.peek ();
+            if (current.equals ( end )) {
+                reconstructPath ( cameFrom,current );
             }
             openSet.poll ();
             Duration tentative_gScore;
             Map<Bow, Duration> connectedNodes = current.getConnectedNodes ();
-            for (Map.Entry<Bow, Duration> c : connectedNodes.entrySet ()){
+            for (Map.Entry<Bow, Duration> c : connectedNodes.entrySet ()) {
                 tentative_gScore = gScore.get ( current ).plus ( c.getValue () );
                 //if true the this path is better than the previous
-                if(tentative_gScore.compareTo ( gScore.getOrDefault ( c.getKey ().getConnectedTo (), Duration.ofHours ( 3 ) ) ) < 0){
-                    cameFrom.put ( c.getKey ().getConnectedTo (), current );
-                   // if(gScore.containsKey ( c.getKey ().getConnectedTo () )){}
-                    gScore.put ( c.getKey ().getConnectedTo (), tentative_gScore );
-                    fScore.put ( c.getKey ().getConnectedTo (), tentative_gScore.plus ( c.getKey ().getConnectedTo ().calcHeuristicLength ( end ) ));
-
-                    if(!openSet.contains ( c.getKey ().getConnectedTo () )){
+                if (tentative_gScore.compareTo ( gScore.getOrDefault ( c.getKey ().getConnectedTo (),Duration.ofHours ( 3 ) ) ) < 0) {
+                    cameFrom.put ( c.getKey ().getConnectedTo (),current );
+                    // if(gScore.containsKey ( c.getKey ().getConnectedTo () )){}
+                    gScore.put ( c.getKey ().getConnectedTo (),tentative_gScore );
+                    fScore.put ( c.getKey ().getConnectedTo (),tentative_gScore.plus ( c.getKey ().getConnectedTo ().calcHeuristicLength ( end ) ) );
+                    if (!openSet.contains ( c.getKey ().getConnectedTo () )) {
                         openSet.offer ( c.getKey ().getConnectedTo () );
                     }
                 }
             }
+            System.out.println ( i++ );
         }
     }
 
-    public void reconstructPath(Map<Node, Node> cameFrom, Node current){
-
-        while (cameFrom.containsKey ( current )){
-            System.out.println (2);
+    public void reconstructPath (Map<Node, Node> cameFrom,Node current) {
+        while (cameFrom.containsKey ( current )) {
+            System.out.println ( 2 );
         }
     }
 
