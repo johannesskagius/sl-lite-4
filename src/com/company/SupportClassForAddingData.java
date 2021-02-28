@@ -6,10 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.Duration;
+import java.util.*;
 
 public class SupportClassForAddingData {
     private TextFiles textFiles = new TextFiles ();
@@ -19,6 +17,8 @@ public class SupportClassForAddingData {
     public SupportClassForAddingData (Main main) {
         this.main = main;
     }
+
+
 
     public Map<Long, Node> addNodes () {
         try {
@@ -48,9 +48,13 @@ public class SupportClassForAddingData {
         return nodes;
     }
 
+    public void addDepartures (Map<Long, ArrayList<Date>> departures){
+
+    }
+
     public Map<Long, Node> addBows () {
-        final int MS_TO_S = 1000;
-        final int S_TO_MIN = 60;
+        Map<Long, ArrayList<Date>> departures = new HashMap<> ();
+        final int MS_TO_MIN = 6000;
         try {
             FileReader inFile = new FileReader ( textFiles.getSTOPTIMES () );
             BufferedReader in = new BufferedReader ( inFile );
@@ -61,14 +65,13 @@ public class SupportClassForAddingData {
                 String[] token = new String[0];
                 if (i != 0) {
                     token = line.split ( "," ); //regulert uttryck betyder splitta den här raden kring kommatecken.
-
                 }
                 i++;
                 if((previous.length > 0) && previous[0].equals ( token[0] )){
-                    long l = stringToDate ( token[1] ).getTime ()-stringToDate ( previous[2] ).getTime ();
-                    l /= MS_TO_S;
-                    l /= S_TO_MIN;
+                    long d = stringToDate ( token[1] ).getTime ()/MS_TO_MIN-stringToDate ( previous[2] ).getTime ()/MS_TO_MIN;
+                    Duration l = Duration.ofMinutes ( d );
                     nodes.get ( Long.parseLong ( previous[3] ) ).addConnection ( nodes.get ( Long.parseLong ( token[3] ) ), l );
+                    departures.computeIfAbsent ( Long.parseLong ( token[3] ), v-> new ArrayList<> () ).add ( stringToDate ( token[2] ) );
                 }
                 previous = token; //Previous 3
             }
@@ -78,6 +81,7 @@ public class SupportClassForAddingData {
         } catch (IOException e) {
             e.printStackTrace ();
         }
+        addDepartures (departures);
         return nodes;
     }
 

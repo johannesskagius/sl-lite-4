@@ -1,5 +1,6 @@
 package com.company;
 
+import java.time.Duration;
 import java.util.*;
 
 public class AStar {
@@ -15,7 +16,7 @@ public class AStar {
 
     //A* fungerar med
     public Route getPath (Node start,Node end) {
-        heuristicMin = start.calcHeuristicLength ( end );
+        //heuristicMin = start.calcHeuristicLength ( end );
         visitedNodes.push ( start );
         Node current = start;
         //Kolla om startnode
@@ -73,14 +74,14 @@ public class AStar {
         double HEURISTICMAX = 1000000; //Should be infinity;
         Node cheapestConnectedNode = null; // new Node (  );
         //Get the cheapest child if not visited.
-        Map<Bow, Long> n = current.getConnectedNodes ();
+        Map<Bow, Duration> n = current.getConnectedNodes ();
         //Get the cheapest unvisitedNode
         double heuristicCost = 0;
 
-        for (Map.Entry<Bow, Long> currentBow : n.entrySet ()) {
+        for (Map.Entry<Bow, Duration> currentBow : n.entrySet ()) {
             //heuristicCost = currentBow.getValue ().doubleValue () + currentBow.getKey ().getConnectedTo ().calcHeuristicLength ( end );
             Node x = currentBow.getKey ().getConnectedTo ();
-            heuristicCost = x.calcHeuristicLength (end)+ currentBow.getValue ().doubleValue ();
+            //heuristicCost = x.calcHeuristicLength (end)+ currentBow.getValue ().doubleValue ();
             if (heuristicCost < HEURISTICMAX && !x.isVisited () || x.equals ( end )) {
                 HEURISTICMAX = heuristicCost;
                 cheapestConnectedNode = x;

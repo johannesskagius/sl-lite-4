@@ -1,5 +1,6 @@
 package com.company;
 
+import java.time.Duration;
 import java.util.Objects;
 
 public class Position {
@@ -45,16 +46,15 @@ public class Position {
     @Override
     public String toString () {
         return stop_lat + ", " + stop_lon;
-
     }
 
-    public double countHeuristicDistance (Position from,Position to) {
+    public Duration countHeuristicDistance (Position from,Position to) {
         final int SQUARED = 2;
         double xDiff = from.getStop_lat () - to.getStop_lat ();
         double yDiff = from.getStop_lon () - to.getStop_lon ();
-
-        Double x = Math.pow ( xDiff,SQUARED );
-        Double y = Math.pow ( yDiff,SQUARED );
-        return Math.sqrt ( x + y );
+        double x = Math.pow ( xDiff,SQUARED );
+        double y = Math.pow ( yDiff,SQUARED );
+        double d = Math.sqrt ( x + y );
+        return Duration.ofMinutes ( (long)d );
     }
 }

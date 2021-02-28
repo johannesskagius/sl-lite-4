@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Route {
     private ArrayList<Node> route = new ArrayList<> ();
-    private AStar aStar = new AStar (this);
+    //private AStar aStar = new AStar (this);
     private AStar2 aStar2 = new AStar2 (this);
     private A3 a3 = new A3(this);
     private Node startNode;
@@ -13,17 +13,16 @@ public class Route {
     public Route () {
     }
 
-    public Route getRoute (Node s,Node n){
-        return aStar.getPath ( s,n );
-    }
+//    public Route getRoute (Node s,Node n){
+//        return aStar.getPath ( s,n );
+//    }
 
     public Route getRoute2 (Node s,Node n){
         return aStar2.getPath ( s,n );
     }
 
     public void getRoute3(Node start, Node end){
-        a3.getRoute(start, end);
-
+        a3.getRoute2(start, end);
     }
 
     public Route getRoute(){

@@ -1,5 +1,6 @@
 package com.company;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -7,8 +8,8 @@ import java.util.Stack;
 public class AStar2 {
     private Route route;
     private Stack<Node> visitedNodes = new Stack<> ();
-    private Stack<Double> closestYet = new Stack<> ();
-    private Map<Node, Double> goToNodeForCost = new HashMap<> ();
+    private Stack<Duration> closestYet = new Stack<> ();
+    private Map<Node, Duration> goToNodeForCost = new HashMap<> ();
 
     public AStar2 (Route route) {
         this.route = route;
@@ -23,17 +24,17 @@ public class AStar2 {
         closestYet.push ( calcHeuristicCost ( null,start,end ) );
         while (!checkIfFinish ( current,end )) {
             Node cheapest = null;
-            double currentCheapest = calcHeuristicCost ( null,current,end )*100;
+            Duration currentCheapest = calcHeuristicCost ( null,current,end );
             if (current.gotChilds ()) {
-                Map<Bow, Long> childs = current.getConnectedNodes ();
+                Map<Bow, Duration> childs = current.getConnectedNodes ();
                 //Go through all nodes and add them to the register
-                for (Map.Entry<Bow, Long> currentBow : childs.entrySet ()) {
+                for (Map.Entry<Bow, Duration> currentBow : childs.entrySet ()) {
                     //Get the node at the current iteration
                     Node compareNode = currentBow.getKey ().getConnectedTo ();
                     //Calculate the cost to move there incl the heuristic cost
-                    double cost = calcHeuristicCost ( currentBow.getKey (),compareNode,end );
+                    Duration cost = calcHeuristicCost ( currentBow.getKey (),compareNode,end );
                     //If the cost is less than the currentchepast for this iteration and less then the closest yet continue on the node
-                    if (cost < currentCheapest || cost < closestYet.peek ()) {
+                    if (cost.compareTo ( currentCheapest ) < 0  /*|| cost < closestYet.peek ()*/) {
                         if(!compareNode.isVisited ()) {
                             cheapest = compareNode;
                         }
@@ -41,7 +42,7 @@ public class AStar2 {
                     if(!goToNodeForCost.containsKey ( compareNode ))
                         goToNodeForCost.put ( compareNode,cost );
                     else
-                        if( cost < goToNodeForCost.get ( compareNode ))
+                        if( cost.compareTo (  goToNodeForCost.get ( compareNode ) ) <0)
                             goToNodeForCost.put ( compareNode, cost );
                 }
                 if (cheapest != null) {
@@ -61,12 +62,12 @@ public class AStar2 {
         return route;
     }
 
-    private Double calcHeuristicCost (Bow b,Node current,Node end) {
-        double cost;
+    private Duration calcHeuristicCost (Bow b,Node current,Node end) {
+        Duration cost;
         if (b == null) {
             cost = current.calcHeuristicLength ( end );
         } else {
-            cost = b.getWeight () + current.calcHeuristicLength ( end );
+            cost = b.getWeight ().plus (  current.calcHeuristicLength ( end ) ) ;
         }
         return cost;
     }
