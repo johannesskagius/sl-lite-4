@@ -127,7 +127,54 @@ public class SupportClassForAddingData {
         return nodesByName;
     }
 
-    public void loadTripsAndRoutes (SL_Trips_Routes sl_trips) {
+    public Map<Long, Trip> getTrips () {
+        Map<Long, Trip> tripsInfo = new HashMap<> ();
+        try {
+            FileReader inFile = new FileReader ( textFiles.getTRIPSFILE ());
+            BufferedReader in = new BufferedReader ( inFile );
+            String line;
+            int i = 0;
+            String[] previous = new String[0];
+            while ((line = in.readLine ()) != null) {
+                String[] token = new String[0];
+                if (i != 0) {
+                    token = line.split ( "," ); //regulert uttryck betyder splitta den här raden kring kommatecken.
+                    tripsInfo.put ( Long.parseLong ( token[2] ), new Trip ( Long.parseLong ( token[0] ), Long.parseLong ( token[2] ), token[3], token[4] ));
+                }
+                i++;
+            }
+            closeReaders ( inFile,in );
+        } catch (FileNotFoundException e) {
+            e.printStackTrace ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+        return tripsInfo;
+    }
 
+    public Map<Long, String> getRoutes () {
+        Map<Long, String> routes = new HashMap<> ();
+        try {
+            FileReader inFile = new FileReader ( textFiles.getROUTESFILE ());
+            BufferedReader in = new BufferedReader ( inFile );
+            String line;
+            int i = 0;
+            String[] previous = new String[0];
+            while ((line = in.readLine ()) != null) {
+                String[] token = new String[0];
+                if (i != 0) {
+                    token = line.split ( "," ); //regulert uttryck betyder splitta den här raden kring kommatecken.
+                    String s = token[2] + ", " + token[3];
+                    routes.put ( Long.parseLong ( token[0] ), s );
+                }
+                i++;
+            }
+            closeReaders ( inFile,in );
+        } catch (FileNotFoundException e) {
+            e.printStackTrace ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+        return routes;
     }
 }

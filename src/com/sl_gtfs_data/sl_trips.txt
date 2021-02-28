@@ -1,4 +1,4 @@
-route_id,service_id,trip_id,trip_headsign,trip_short_name
+route_id        ,service_id ,trip_id            ,trip_headsign              ,trip_short_name
 1275006900001,000094,22750069773107,Stockholm Kaknästornet,null
 1275006900001,000094,22750069773265,Stockholm Kaknästornet,null
 1275006900001,000094,22750069775280,Stockholm Kaknästornet,null
