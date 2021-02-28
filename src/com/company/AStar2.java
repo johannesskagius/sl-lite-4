@@ -67,7 +67,7 @@ public class AStar2 {
         if (b == null) {
             cost = current.calcHeuristicLength ( end );
         } else {
-            cost = b.getWeight ().plus (  current.calcHeuristicLength ( end ) ) ;
+            cost = b.getCost ().plus (  current.calcHeuristicLength ( end ) ) ;
         }
         return cost;
     }

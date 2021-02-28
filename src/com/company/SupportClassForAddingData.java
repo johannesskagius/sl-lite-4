@@ -7,17 +7,20 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SupportClassForAddingData {
     private TextFiles textFiles = new TextFiles ();
     private Map<Long, Node> nodes = new HashMap<> ();
     private Main main;
 
+
     public SupportClassForAddingData (Main main) {
         this.main = main;
     }
-
 
 
     public Map<Long, Node> addNodes () {
@@ -34,7 +37,7 @@ public class SupportClassForAddingData {
                     String latitud = token[2];
                     String longitud = token[3];
 
-                    sl_stop = new Node ( Long.parseLong ( token[0] ) ,token[1],new Position ( Double.parseDouble ( token[2] ),Double.parseDouble ( token[3] ) ) );
+                    sl_stop = new Node ( Long.parseLong ( token[0] ),token[1],new Position ( Double.parseDouble ( token[2] ),Double.parseDouble ( token[3] ) ) );
                     nodes.put ( Long.parseLong ( token[0] ),sl_stop );
                 }
                 i++;
@@ -48,30 +51,36 @@ public class SupportClassForAddingData {
         return nodes;
     }
 
-    public void addDepartures (Map<Long, ArrayList<Date>> departures){
-
+    public void loadDepartures (Map<Long, ArrayList<Departures>> departures) {
+        for (Map.Entry<Long, ArrayList<Departures>> x : departures.entrySet ()) {       //O(N)
+            ArrayList<Departures> xDep = x.getValue ();
+            for(Departures d : xDep) nodes.get ( x.getKey () ).addDepartures ( d );     //O(N)
+        }
     }
 
     public Map<Long, Node> addBows () {
-        Map<Long, ArrayList<Date>> departures = new HashMap<> ();
-        final int MS_TO_MIN = 6000;
+        Map<Long, ArrayList<Departures>> departures = new HashMap<> ();
+        final int MS_TO_MIN = 60000;
         try {
             FileReader inFile = new FileReader ( textFiles.getSTOPTIMES () );
             BufferedReader in = new BufferedReader ( inFile );
             String line;
             int i = 0;
-            String []previous = new String[0];
+            String[] previous = new String[0];
             while ((line = in.readLine ()) != null) {
                 String[] token = new String[0];
                 if (i != 0) {
                     token = line.split ( "," ); //regulert uttryck betyder splitta den här raden kring kommatecken.
                 }
                 i++;
-                if((previous.length > 0) && previous[0].equals ( token[0] )){
-                    long d = stringToDate ( token[1] ).getTime ()/MS_TO_MIN-stringToDate ( previous[2] ).getTime ()/MS_TO_MIN;
+                if ((previous.length > 0) && previous[0].equals ( token[0] )) {
+                    long d = stringToDate ( token[1] ).getTime () / MS_TO_MIN - stringToDate ( previous[2] ).getTime () / MS_TO_MIN;
                     Duration l = Duration.ofMinutes ( d );
-                    nodes.get ( Long.parseLong ( previous[3] ) ).addConnection ( nodes.get ( Long.parseLong ( token[3] ) ), l );
-                    departures.computeIfAbsent ( Long.parseLong ( token[3] ), v-> new ArrayList<> () ).add ( stringToDate ( token[2] ) );
+                    Bow b = new Bow ( l,nodes.get ( Long.parseLong ( token[3] ) ), Long.parseLong ( token[0] ) );
+                    //Adds the bow with departures and the trip_id
+                    nodes.get ( Long.parseLong ( previous[3] ) ).addConnection ( b );
+                    departures.computeIfAbsent ( Long.parseLong ( token[3] ), v-> new ArrayList<> () ).add ( new Departures ( Long.parseLong ( token[0] ), stringToDate ( token[2] ) ) );
+                    //nodes.get ( Long.parseLong ( token[3] ) ).
                 }
                 previous = token; //Previous 3
             }
@@ -81,7 +90,7 @@ public class SupportClassForAddingData {
         } catch (IOException e) {
             e.printStackTrace ();
         }
-        addDepartures (departures);
+        loadDepartures ( departures );
         return nodes;
     }
 
@@ -112,9 +121,13 @@ public class SupportClassForAddingData {
 
     public Map<String, Long> addNodesByName () {
         Map<String, Long> nodesByName = new HashMap<> ();
-        for(Map.Entry<Long, Node> current: nodes.entrySet ()){
-            nodesByName.put ( current.getValue ().getStop_name (), current.getKey () );
+        for (Map.Entry<Long, Node> current : nodes.entrySet ()) {
+            nodesByName.put ( current.getValue ().getStop_name (),current.getKey () );
         }
         return nodesByName;
+    }
+
+    public void loadTripsAndRoutes (SL_Trips_Routes sl_trips) {
+
     }
 }

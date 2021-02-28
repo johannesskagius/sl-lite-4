@@ -1,27 +1,22 @@
 package com.company;
 
 import java.time.Duration;
-import java.util.Date;
-import java.util.Objects;
-import java.util.SortedSet;
+import java.util.*;
 
 public class Bow {
-    private Duration weight;    // Ändra till tid / se till att det är samma enhet
+    private long trip_id;
+    private Duration cost;    // Ändra till tid / se till att det är samma enhet
     private Node connectedTo;
-    private SortedSet<Date> departures;
 
-    public Bow (Duration weight,Node connectedTo) {
+    public Bow (Duration weight,Node connectedTo, long trip_id) {
         this.connectedTo = connectedTo;
-        this.weight = weight;
+        this.trip_id = trip_id;
+        this.cost = weight;
         //this.departures =;
     }
 
-    public void addDepartureTime(Date d){
-        departures.add ( d );
-    }
-
-    public Duration getWeight () {
-        return weight;
+    public Duration getCost () {
+        return cost;
     }
 
     public Node getConnectedTo () {
@@ -43,7 +38,7 @@ public class Bow {
 
     @Override
     public String toString () {
-        return connectedTo.toString () +", :"+ weight.toMinutes ();
+        return connectedTo.toString () +", :"+ cost.toMinutes ();
     }
 }
 

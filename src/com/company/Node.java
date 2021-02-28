@@ -4,10 +4,7 @@ package com.company;
 
 import java.sql.Time;
 import java.time.Duration;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Node implements Comparable<Node> {
     private Long stop_id;
@@ -16,9 +13,9 @@ public class Node implements Comparable<Node> {
     private boolean isVisited;
     private Duration heuristicDistance;
     private Duration cost;
-    private double costInclHeu;
     private Map<Bow, Duration> connectedNodes = new HashMap<> ();
-    private Map<Node, Bow> connectedNodeToBow = new HashMap<> ();
+    private Map<Long,Departures> departures = new HashMap<> ();
+
 
     public Node (Long stop_id,String stop_name,Position position) {
         this.stop_id = stop_id;
@@ -26,15 +23,15 @@ public class Node implements Comparable<Node> {
         this.position = position;
     }
 
-    public void addConnection(Node in, Duration weight){
-        Bow b = new Bow (weight, in);
-        cost=weight;
-        connectedNodes.put ( b, weight );
+    public void addDepartures(Departures d){
+        departures.put (d.getTrip_id (), d);
     }
 
-    public Bow getBow(Node b){
-        return connectedNodeToBow.get ( b );
+    public void addConnection(Bow b){
+        this.cost = b.getCost ();
+        connectedNodes.put ( b, b.getCost () );
     }
+
 
     public boolean isVisited () {
         return isVisited;

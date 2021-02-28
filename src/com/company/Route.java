@@ -1,28 +1,21 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Route {
-    private ArrayList<Node> route = new ArrayList<> ();
-    //private AStar aStar = new AStar (this);
-    private AStar2 aStar2 = new AStar2 (this);
-    private A3 a3 = new A3(this);
+    private SL_Trips_Routes sl_trips = new SL_Trips_Routes ();
+    private List<Node> route = new LinkedList<> ();
+    private AStar aStar = new AStar (this);
     private Node startNode;
     private Node endNode;
 
-    public Route () {
+    public Route (SL_Trips_Routes sl_trips) {
     }
 
-//    public Route getRoute (Node s,Node n){
-//        return aStar.getPath ( s,n );
-//    }
-
-    public Route getRoute2 (Node s,Node n){
-        return aStar2.getPath ( s,n );
-    }
-
-    public void getRoute3(Node start, Node end){
-        a3.getRoute2(start, end);
+    public void getRoute(Node start, Node end){
+        route = aStar.getRoute2(start, end);
     }
 
     public Route getRoute(){
@@ -39,10 +32,6 @@ public class Route {
 
     public void setRoute (ArrayList<Node> route) {
         this.route = route;
-    }
-
-    protected ArrayList<Node> getRouteArray () {
-        return route;
     }
 
     public int getNrOfStops () {
