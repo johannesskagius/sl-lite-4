@@ -15,11 +15,16 @@ public class Main {
         m.test();
     }
 
+    /*
+    * Stationer som inte fungerar
+    * Lidingö baggeby station
+    *
+    * */
 
     private void test () {
         Route r = new Route ();
-        long startID = nodesByName.get ( "Zinkensdamm T-bana" );
-        long finID = nodesByName.get ( "T-Centralen T-bana" );
+        long startID = nodesByName.get ( "Mariatorget T-bana" );
+        long finID = nodesByName.get ( "Sickla station" );
         Node start = nodes.get ( startID );
         Node finish = nodes.get ( finID );
         //Route r2 =

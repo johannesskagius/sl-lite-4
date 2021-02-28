@@ -6,12 +6,12 @@ import java.util.*;
 
 //Inspired by https://mat.uab.cat/~alseda/MasterOpt/AStar-Algorithm.pdf
 public class A3 {
-    private final Route route;
+    //private final Route route;
     List<Node> open = new ArrayList<> ();
     Map<Node, Duration> closed = new HashMap<> ();
 
     public A3 (Route route) {
-        this.route = route;
+        //this.route = route;
     }
 
     public void getRoute (Node start,Node end) {
@@ -107,9 +107,12 @@ public class A3 {
     }
 
     public void reconstructPath (Map<Node, Node> cameFrom,Node current) {
+        LinkedList<Node> route = new LinkedList<> ();
         while (cameFrom.containsKey ( current )) {
-            System.out.println ( 2 );
+            current = cameFrom.get ( current );
+            route.add ( current );
         }
+        System.out.println (route);
     }
 
 
