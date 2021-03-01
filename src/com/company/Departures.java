@@ -32,4 +32,10 @@ public class Departures implements Comparable<Departures> {
     public int compareTo (Departures o) {
         return  o.departure_time.compareTo ( this.departure_time ) <= 0 ? 1:-1;
     }
+
+
+    @Override
+    public String toString () {
+        return trip_id+"";
+    }
 }

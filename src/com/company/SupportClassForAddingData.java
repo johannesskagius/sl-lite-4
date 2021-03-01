@@ -77,10 +77,8 @@ public class SupportClassForAddingData {
                     long d = stringToDate ( token[1] ).getTime () / MS_TO_MIN - stringToDate ( previous[2] ).getTime () / MS_TO_MIN;
                     Duration l = Duration.ofMinutes ( d );
                     Bow b = new Bow ( l,nodes.get ( Long.parseLong ( token[3] ) ), Long.parseLong ( token[0] ) );
-                    //Adds the bow with departures and the trip_id
                     nodes.get ( Long.parseLong ( previous[3] ) ).addConnection ( b );
-                    departures.computeIfAbsent ( Long.parseLong ( token[3] ), v-> new ArrayList<> () ).add ( new Departures ( Long.parseLong ( token[0] ), stringToDate ( token[2] ) ) );
-                    //nodes.get ( Long.parseLong ( token[3] ) ).
+                    departures.computeIfAbsent ( Long.parseLong ( previous[3] ), v-> new ArrayList<> () ).add ( new Departures ( Long.parseLong ( token[3] ), stringToDate ( token[2] ) ) );
                 }
                 previous = token; //Previous 3
             }

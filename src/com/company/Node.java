@@ -10,7 +10,6 @@ public class Node implements Comparable<Node> {
     private Long stop_id;
     private String stop_name;
     private Position position;
-    private boolean isVisited;
     private Duration heuristicDistance;
     private Duration cost;
     private Map<Bow, Duration> connectedNodes = new HashMap<> ();
@@ -32,9 +31,8 @@ public class Node implements Comparable<Node> {
         connectedNodes.put ( b, b.getCost () );
     }
 
-
-    public boolean isVisited () {
-        return isVisited;
+    public Departures getDeparture(Node goingTo){
+        return departures.get ( goingTo.getStop_id () );
     }
 
     public Duration getCost(Bow b){
@@ -106,9 +104,6 @@ public class Node implements Comparable<Node> {
         return Objects.hashCode ( stop_id );
     }
 
-    public void setVisited (boolean b) {
-        isVisited = b;
-    }
     public Duration calcHeuristicLength (Node n) {
         heuristicDistance =position.countHeuristicDistance ( this.position, n.position );
         return heuristicDistance;
