@@ -13,7 +13,7 @@ public class Node implements Comparable<Node> {
     private Duration heuristicDistance;
     private Duration cost;
     private Map<Bow, Duration> connectedNodes = new HashMap<> ();
-    private Map<Long,Departures> departures = new HashMap<> ();
+    private Map<Node, ArrayList<Departures>> departures = new HashMap<> ();
 
 
     public Node (Long stop_id,String stop_name,Position position) {
@@ -22,8 +22,8 @@ public class Node implements Comparable<Node> {
         this.position = position;
     }
 
-    public void addDepartures(Departures d){
-        departures.put (d.getTrip_id (), d);
+    public void addDepartures(Node n, Departures d){
+        departures.computeIfAbsent (n, v-> new ArrayList<> ()).add ( d );
     }
 
     public void addConnection(Bow b){
@@ -32,7 +32,7 @@ public class Node implements Comparable<Node> {
     }
 
     public Departures getDeparture(Node goingTo){
-        return departures.get ( goingTo.getStop_id () );
+        return departures.get ( goingTo ).get ( 0 );
     }
 
     public Duration getCost(Bow b){

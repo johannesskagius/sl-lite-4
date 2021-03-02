@@ -3,17 +3,27 @@ package com.company;
 import java.util.Date;
 
 public class Departures implements Comparable<Departures> {
+    private Node goingTo;
     private long trip_id;
     private Date departure_time;
 
 
-    public Departures (long trip_id,Date departure_time) {
+    public Departures (Node goingTo, long trip_id,Date departure_time) {
+        this.goingTo = goingTo;
         this.trip_id = trip_id;
         this.departure_time = departure_time;
     }
 
     public long getTrip_id () {
         return trip_id;
+    }
+
+    public Node getGoingTo () {
+        return goingTo;
+    }
+
+    public void setGoingTo (Node goingTo) {
+        this.goingTo = goingTo;
     }
 
     public void setTrip_id (long trip_id) {
@@ -36,6 +46,6 @@ public class Departures implements Comparable<Departures> {
 
     @Override
     public String toString () {
-        return trip_id+"";
+        return goingTo+"";
     }
 }

@@ -30,7 +30,6 @@ public class AStar {
         Map<Node, Duration> fScore = new HashMap<> ();
         fScore.put ( start,Duration.ofMinutes ( 2 ) );
         Node current = null;
-        int i = 0;
         while (!openSet.isEmpty ()) {
             current = openSet.peek ();
             if (current.equals ( end )) {
@@ -52,19 +51,17 @@ public class AStar {
                     }
                 }
             }
-            System.out.println (i++);
         }
         throw new IllegalArgumentException ();
     }
 
     public LinkedList<Node> reconstructPath (Map<Node, Node> cameFrom,Node current, Node end) {
         LinkedList<Node> route2 = new LinkedList<> ();
+        route2.add ( current );
         while (cameFrom.containsKey ( current )) {
             current = cameFrom.get ( current );
             route2.add ( current );
         }
-        route2.add ( end );
-
         return route2;
     }
 

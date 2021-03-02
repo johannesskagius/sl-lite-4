@@ -52,9 +52,14 @@ public class SupportClassForAddingData {
     }
 
     public void loadDepartures (Map<Long, ArrayList<Departures>> departures) {
+        final int GOING_TO_NOD_ID = 0;
         for (Map.Entry<Long, ArrayList<Departures>> x : departures.entrySet ()) {       //O(N)
             ArrayList<Departures> xDep = x.getValue ();
-            for(Departures d : xDep) nodes.get ( x.getKey () ).addDepartures ( d );     //O(N)
+            int i = 0;
+            for(Departures d : xDep) {
+                nodes.get ( x.getKey () ).addDepartures ( xDep.get ( i ).getGoingTo (),d );     //O(N)
+                i++;
+            }
         }
     }
 
@@ -78,7 +83,7 @@ public class SupportClassForAddingData {
                     Duration l = Duration.ofMinutes ( d );
                     Bow b = new Bow ( l,nodes.get ( Long.parseLong ( token[3] ) ), Long.parseLong ( token[0] ) );
                     nodes.get ( Long.parseLong ( previous[3] ) ).addConnection ( b );
-                    departures.computeIfAbsent ( Long.parseLong ( previous[3] ), v-> new ArrayList<> () ).add ( new Departures ( Long.parseLong ( token[3] ), stringToDate ( token[2] ) ) );
+                    departures.computeIfAbsent ( Long.parseLong ( previous[3] ), v-> new ArrayList<> () ).add ( new Departures ( nodes.get ( Long.parseLong ( token[3] ) ) ,Long.parseLong ( token[0] ), stringToDate ( token[2] ) ) );
                 }
                 previous = token; //Previous 3
             }

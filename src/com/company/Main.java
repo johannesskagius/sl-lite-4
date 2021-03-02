@@ -28,6 +28,10 @@ public class Main {
     }
 
 
+    /**
+     *
+     */
+
     private void test () {
         Route r = new Route (sl_trips);
         long startID = nodesByName.get ( "T-Centralen T-bana" );
@@ -45,7 +49,6 @@ public class Main {
         nodes = s.addNodes ();
         nodesByName = s.addNodesByName();
         nodes = s.addBows ();
-        System.out.println ("s");
     }
 
     private void run (){
