@@ -22,7 +22,6 @@ public class SL_Trips_Routes {
 
     public String getTripInfo(long tripID){
         Trip t = trips.get ( tripID );
-
         String route = routes.get ( t.getRoute_id () );
         return route+", "+ t.getTrip_headsign ();
         }

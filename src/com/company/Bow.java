@@ -3,6 +3,10 @@ package com.company;
 import java.time.Duration;
 import java.util.*;
 
+
+/**
+ * TODO notes
+ */
 public class Bow {
     private long trip_id;
     private Duration cost;    // Ändra till tid / se till att det är samma enhet
@@ -12,7 +16,6 @@ public class Bow {
         this.connectedTo = connectedTo;
         this.trip_id = trip_id;
         this.cost = weight;
-        //this.departures =;
     }
 
     public Duration getCost () {

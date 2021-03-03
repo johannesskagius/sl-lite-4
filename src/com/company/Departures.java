@@ -43,7 +43,6 @@ public class Departures implements Comparable<Departures> {
         return  o.departure_time.compareTo ( this.departure_time ) <= 0 ? 1:-1;
     }
 
-
     @Override
     public String toString () {
         return goingTo+"";

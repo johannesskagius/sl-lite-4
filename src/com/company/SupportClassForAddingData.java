@@ -22,6 +22,11 @@ public class SupportClassForAddingData {
         this.main = main;
     }
 
+    /**
+     * TODO make notes
+     *
+     * @return
+     */
 
     public Map<Long, Node> addNodes () {
         try {

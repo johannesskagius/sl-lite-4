@@ -7,7 +7,6 @@ public class Main {
     SupportClassForAddingData s = new SupportClassForAddingData ( this );
     private Map<Long, Node> nodes = new HashMap<> ();
     private Map<String, Long> nodesByName = new HashMap<> ();
-
     private SL_Trips_Routes sl_trips = new SL_Trips_Routes ();
 
 
@@ -16,7 +15,9 @@ public class Main {
         m.addSlRoutes ();
         m.loadTrips();
         m.addNodes();
+        long start = System.currentTimeMillis ();
         m.test();
+        System.out.println (System.currentTimeMillis ()-start);
     }
 
     private void loadTrips () {
@@ -34,12 +35,11 @@ public class Main {
 
     private void test () {
         Route r = new Route (sl_trips);
-        long startID = nodesByName.get ( "T-Centralen T-bana" );
-        long finID = nodesByName.get ( "Slussen T-bana" );
+        long startID = nodesByName.get ( "Slussen T-bana" );
+        long finID = nodesByName.get ( "Kaknäs" );
         Node start = nodes.get ( startID );
         Node finish = nodes.get ( finID );
-        r.getRoute ( start, finish );
-        String s = r.getRouteDescription ();
+        String s = r.getRouteDescription (start, finish);
         System.out.println (s);
     }
 

@@ -5,6 +5,7 @@ package com.company;
 import java.sql.Time;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class Node implements Comparable<Node> {
     private Long stop_id;
@@ -13,7 +14,7 @@ public class Node implements Comparable<Node> {
     private Duration heuristicDistance;
     private Duration cost;
     private Map<Bow, Duration> connectedNodes = new HashMap<> ();
-    private Map<Node, ArrayList<Departures>> departures = new HashMap<> ();
+    private Map<Node, TreeSet<Departures>> departures = new HashMap<> ();
 
 
     public Node (Long stop_id,String stop_name,Position position) {
@@ -23,7 +24,8 @@ public class Node implements Comparable<Node> {
     }
 
     public void addDepartures(Node n, Departures d){
-        departures.computeIfAbsent (n, v-> new ArrayList<> ()).add ( d );
+        departures.computeIfAbsent (n, v-> new TreeSet<> () {
+        }).add ( d );
     }
 
     public void addConnection(Bow b){
@@ -32,7 +34,12 @@ public class Node implements Comparable<Node> {
     }
 
     public Departures getDeparture(Node goingTo){
-        return departures.get ( goingTo ).get ( 0 );
+        return departures.get ( goingTo ).first ();
+    }
+
+    public Date getNextDepartureTime(Departures d){
+        Departures x = departures.get ( d.getGoingTo () ).higher ( d );
+        return departures.get ( d.getGoingTo () ).higher ( d ).getDeparture_time ();
     }
 
     public Duration getCost(Bow b){

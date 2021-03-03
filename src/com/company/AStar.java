@@ -10,23 +10,32 @@ public class AStar {
     List<Node> open = new ArrayList<> ();
     Map<Node, Duration> closed = new HashMap<> ();
 
+    /**
+     *
+     * @param route
+     */
     public AStar (Route route) {
         this.route = route;
     }
 
+
+    /**
+     *
+     * @param start
+     * @param end
+     * @return
+     */
     public LinkedList<Node> getRoute2 (Node start,Node end) {
         Queue<Node> openSet = new PriorityQueue<> ();
         openSet.offer ( start );
         Map<Node, Node> cameFrom = new HashMap<> ();
         final Duration defaultValue = Duration.ofHours ( 100 ); // Should be infinity
-
         //Gscore is the cost of the cheapest path from start to n currently known
         Map<Node, Duration> gScore = new HashMap<> ();
         gScore.put ( start,Duration.ZERO );
-
         //fScore for node n, fScore(n) = gScore(n)+h(n) or the heuristic cost of n.
         // fScore represent our current best guess as to how short a path from start to finish can be
-        //Default value infinity
+        // D efault value infinity
         Map<Node, Duration> fScore = new HashMap<> ();
         fScore.put ( start,Duration.ofMinutes ( 2 ) );
         Node current = null;
@@ -55,6 +64,13 @@ public class AStar {
         throw new IllegalArgumentException ();
     }
 
+    /**
+     *
+     * @param cameFrom
+     * @param current
+     * @param end
+     * @return
+     */
     public LinkedList<Node> reconstructPath (Map<Node, Node> cameFrom,Node current, Node end) {
         LinkedList<Node> route2 = new LinkedList<> ();
         route2.add ( current );
@@ -63,16 +79,5 @@ public class AStar {
             route2.add ( current );
         }
         return route2;
-    }
-
-
-    private Duration calcHeuristicCostToEnd (Bow b,Node end) {
-        Duration cost;
-        if (b == null) {
-            cost = b.getConnectedTo ().calcHeuristicLength ( end );
-        } else {
-            cost = b.getCost ().plus ( b.getConnectedTo ().calcHeuristicLength ( end ) );
-        }
-        return cost;
     }
 }
