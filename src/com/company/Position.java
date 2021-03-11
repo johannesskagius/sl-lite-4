@@ -48,6 +48,12 @@ public class Position {
         return stop_lat + ", " + stop_lon;
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     public Duration countHeuristicDistance (Position from,Position to) {
         final int SQUARED = 2;
         double xDiff = from.getStop_lat () - to.getStop_lat ();

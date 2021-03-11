@@ -4,13 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class SupportClassForAddingData {
     private TextFiles textFiles = new TextFiles ();
@@ -56,6 +55,10 @@ public class SupportClassForAddingData {
         return nodes;
     }
 
+    /**
+     *
+     * @param departures
+     */
     public void loadDepartures (Map<Long, ArrayList<Departures>> departures) {
         final int GOING_TO_NOD_ID = 0;
         for (Map.Entry<Long, ArrayList<Departures>> x : departures.entrySet ()) {       //O(N)
@@ -68,6 +71,10 @@ public class SupportClassForAddingData {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<Long, Node> addBows () {
         Map<Long, ArrayList<Departures>> departures = new HashMap<> ();
         final int MS_TO_MIN = 60000;
@@ -102,18 +109,34 @@ public class SupportClassForAddingData {
         return nodes;
     }
 
-    private Date stringToDate (String s) {
+    /**
+     *
+     * @param s
+     * @return
+     */
+    private Time stringToDate (String s) {
         final String PATTERN = "HH:mm:ss";
-        Date date = new Date ();
-        SimpleDateFormat format = new SimpleDateFormat ( PATTERN );
+        Date date = Calendar.getInstance ().getTime ();
+        SimpleDateFormat format = new SimpleDateFormat ( PATTERN ); //RETURNERR 1 januari 1970. Därför fungerar inte treeset!!
+        Time t = null;
+        try {
+            t = new Time ( format.parse ( s ).getTime () );
+        } catch (ParseException e) {
+            e.printStackTrace ();
+        }
         try {
             date = format.parse ( s );
         } catch (ParseException e) {
             e.printStackTrace ();
         }
-        return date;
+        return t;
     }
 
+    /**
+     *
+     * @param inFile
+     * @param in
+     */
     private void closeReaders (FileReader inFile,BufferedReader in) {
         try {
             in.close ();
@@ -123,10 +146,19 @@ public class SupportClassForAddingData {
         }
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     private Double stringToDouble (String s) {
         return Double.parseDouble ( s );
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, Long> addNodesByName () {
         Map<String, Long> nodesByName = new HashMap<> ();
         for (Map.Entry<Long, Node> current : nodes.entrySet ()) {
@@ -135,6 +167,10 @@ public class SupportClassForAddingData {
         return nodesByName;
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<Long, Trip> getTrips () {
         Map<Long, Trip> tripsInfo = new HashMap<> ();
         try {
@@ -159,6 +195,11 @@ public class SupportClassForAddingData {
         }
         return tripsInfo;
     }
+
+    /**
+     *
+     * @return
+     */
 
     public Map<Long, String> getRoutes () {
         Map<Long, String> routes = new HashMap<> ();

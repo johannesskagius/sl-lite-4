@@ -17,47 +17,88 @@ public class Node implements Comparable<Node> {
     private Map<Node, TreeSet<Departures>> departures = new HashMap<> ();
 
 
+    /**
+     *
+     * @param stop_id
+     * @param stop_name
+     * @param position
+     */
     public Node (Long stop_id,String stop_name,Position position) {
         this.stop_id = stop_id;
         this.stop_name = stop_name;
         this.position = position;
     }
 
+    /**
+     *
+     * @param n
+     * @param d
+     */
     public void addDepartures(Node n, Departures d){
         departures.computeIfAbsent (n, v-> new TreeSet<> () {
         }).add ( d );
     }
 
+    /**
+     *
+     * @param b
+     */
     public void addConnection(Bow b){
         this.cost = b.getCost ();
         connectedNodes.put ( b, b.getCost () );
     }
 
+    /**
+     *
+     * @param goingTo
+     * @return
+     */
     public Departures getDeparture(Node goingTo){
         return departures.get ( goingTo ).first ();
     }
 
-    public Date getNextDepartureTime(Departures d){
+    public Time getNextDepartureTime(Departures d){
         Departures x = departures.get ( d.getGoingTo () ).higher ( d );
         return departures.get ( d.getGoingTo () ).higher ( d ).getDeparture_time ();
     }
 
+    /**
+     *
+     * @param b
+     * @return
+     */
     public Duration getCost(Bow b){
         return connectedNodes.get ( b );
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean gotChilds(){
         return connectedNodes.size () != 0;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getStop_id () {
         return stop_id;
     }
 
+    /**
+     *
+     * @param stop_id
+     */
     public void setStop_id (Long stop_id) {
         this.stop_id = stop_id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getStop_name () {
         return stop_name;
     }

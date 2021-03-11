@@ -1,10 +1,9 @@
 package com.company;
 
+import java.sql.Time;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.time.LocalTime;
+import java.util.*;
 
 public class Route {
     private SL_Trips_Routes sl_trips = new SL_Trips_Routes ();
@@ -17,36 +16,57 @@ public class Route {
         this.sl_trips = sl_trips;
     }
 
+    /**
+     *
+     * @param start
+     * @param end
+     * @return
+     */
     public String getRouteDescription (Node start,Node end) {
-        Date d = new Date ();
+        Time d = Time.valueOf ( LocalTime.now () );
+        Time firstDeparture = null;
         route = aStar.getRoute2 ( start,end );
+        Collections.reverse ( route );
         Node previous = null;
-        String s = "Travel from: " + route.get ( 0 ) + ", to: " + route.get ( route.size () - 1 );
+        String s ="";
         for (int i = 0; i < route.size (); i++) {
             Node ett = route.get ( i );
-
             Node tva = null;
             if (i != route.size () - 1) {
                 tva = route.get ( i + 1 );
                 long trip = ett.getDeparture ( tva ).getTrip_id ();
                 d = ett.getNextDepartureTime ( new Departures ( tva, trip, d ) );
+                if(firstDeparture == null) firstDeparture =d;
                 s += "\n" + i + ", " + sl_trips.getTripInfo ( trip );
             } else {
                 s += "\n" + i + ", " + ett;
             }
         }
-        return s;
+        String x = "Travel from: " + route.get ( 0 ) + ", to: " + route.get ( route.size () - 1 ) +", Next departure: " + firstDeparture.toString ();
+        return x+s;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public Route getRoute () {
         return this;
     }
 
+    /**
+     *
+     * @param route
+     */
     public void setRoute (ArrayList<Node> route) {
         this.route = route;
     }
 
+    /**
+     *
+     * @param node
+     * @return
+     */
     public Node addNode (Node node) {
         if (route.size () == 0)
             startNode = node;

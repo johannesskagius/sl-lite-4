@@ -12,16 +12,30 @@ public class Bow {
     private Duration cost;    // Ändra till tid / se till att det är samma enhet
     private Node connectedTo;
 
+    /**
+     *
+     * @param weight
+     * @param connectedTo
+     * @param trip_id
+     */
     public Bow (Duration weight,Node connectedTo, long trip_id) {
         this.connectedTo = connectedTo;
         this.trip_id = trip_id;
         this.cost = weight;
     }
 
+    /**
+     *
+     * @return
+     */
     public Duration getCost () {
         return cost;
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getConnectedTo () {
         return connectedTo;
     }
