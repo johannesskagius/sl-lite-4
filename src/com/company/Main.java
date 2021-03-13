@@ -40,6 +40,7 @@ public class Main {
     /**
      *
      */
+
     private void test () {
         Route r = new Route ( sl_trips );
         long startID = nodesByName.get ( "Gullmarsplan T-bana" );
