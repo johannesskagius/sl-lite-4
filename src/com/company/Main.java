@@ -1,6 +1,7 @@
 //  @author josk3261 Johannes Skagius
 // Stockholms university
 // Kurs: ALDA - algoritmer och datastrukturer
+
 package com.company;
 
 import java.util.HashMap;
@@ -109,6 +110,7 @@ public class Main {
                 }
             }
         } while (choice != 3);
+        scanner.close ();
     }
 
     private int getChoice (Scanner scanner) {
