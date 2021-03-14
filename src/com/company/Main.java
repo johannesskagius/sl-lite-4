@@ -5,6 +5,8 @@ package com.company;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  *
@@ -21,11 +23,8 @@ public class Main {
         m.addSlRoutes ();
         m.loadTrips ();
         m.addNodes ();
-        long start = System.currentTimeMillis ();
-        m.test ();
-        System.out.println ( "Route found within: " + (System.currentTimeMillis () - start) + "ms" );
+        m.run ();
     }
-
 
     private void loadTrips () {
         sl_trips.setTrips ( s.getTrips () );
@@ -45,6 +44,46 @@ public class Main {
         System.out.println ( s );
     }
 
+    /**
+     * Final test for this program to make sure everything works.
+     * <p>
+     * Chooses to nodes randomly, finds the most time efficient path between them and record the time it took to find the path.
+     */
+    private void efficiencyTest (int choice) {
+        long effiency = 0;
+        String s = "";
+        Route r = new Route ( sl_trips );
+        Random random = new Random ();
+        int start;
+        int fin;
+        for (int i = 0; i < choice; i++) {
+            start = random.nextInt ( 443 );
+            fin = random.nextInt ( 443 );
+            Node startNode = getNode ( start );
+            Node finNode = getNode ( fin );
+            long startTime = System.currentTimeMillis ();
+            s = r.getRouteDescription ( startNode,finNode );
+            long endTime = System.currentTimeMillis ();
+            effiency += (endTime - startTime);
+        }
+        if (choice == 2) {
+            System.out.println ( s );
+        } else {
+            System.out.println ( "average: " + effiency / choice + "ms" );
+        }
+    }
+
+    private Node getNode (int start) {
+        int i = 0;
+        for (Map.Entry<Long, Node> x : nodes.entrySet ()) {
+            if (i == start) {
+                return x.getValue ();
+            }
+            i++;
+        }
+        return null;
+    }
+
     private void addNodes () {
         SupportClassForAddingData s = new SupportClassForAddingData ( this );
         nodes = s.addNodes ();
@@ -53,6 +92,30 @@ public class Main {
     }
 
     private void run () {
+        Scanner scanner = new Scanner ( System.in );
+        int choice = 0;
+        do {
+            System.out.println ( "What would you like to do?" );
+            System.out.println ( "Enter: 1 printing the route guide between two randomized stations" );
+            System.out.println ( "Enter: 2 getting the average time for finding x number of paths" );
+            System.out.println ( "Enter: 3 to quit" );
+            choice = getChoice ( scanner );
+            switch (choice) {
+                case 1 -> efficiencyTest ( 2 );
+                case 2 -> {
+                    System.out.println ( "How many would you like to run?" );
+                    int howMany = getChoice ( scanner );
+                    efficiencyTest ( howMany );
+                }
+            }
+        } while (choice != 3);
+    }
 
+    private int getChoice (Scanner scanner) {
+        try {
+            return Integer.parseInt ( scanner.nextLine () );
+        } catch (NumberFormatException e) {
+            return getChoice ( scanner );
+        }
     }
 }
