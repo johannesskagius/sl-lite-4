@@ -1,3 +1,9 @@
+/**
+ * @author josk3261 Johannes Skagius
+ * Stockholms universitet
+ * Kurs: ALDA - algoritmer och datastrukturer
+ */
+
 package com.company;
 
 
@@ -5,7 +11,6 @@ package com.company;
 import java.sql.Time;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.PriorityBlockingQueue;
 
 public class Node implements Comparable<Node> {
     private Long stop_id;
@@ -62,38 +67,7 @@ public class Node implements Comparable<Node> {
         return departures.get ( d.getGoingTo () ).higher ( d ).getDeparture_time ();
     }
 
-    /**
-     *
-     * @param b
-     * @return
-     */
-    public Duration getCost(Bow b){
-        return connectedNodes.get ( b );
-    }
 
-    /**
-     *
-     * @return
-     */
-    public boolean gotChilds(){
-        return connectedNodes.size () != 0;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Long getStop_id () {
-        return stop_id;
-    }
-
-    /**
-     *
-     * @param stop_id
-     */
-    public void setStop_id (Long stop_id) {
-        this.stop_id = stop_id;
-    }
 
     /**
      *
@@ -103,40 +77,8 @@ public class Node implements Comparable<Node> {
         return stop_name;
     }
 
-    public void setStop_name (String stop_name) {
-        this.stop_name = stop_name;
-    }
-
-    public Position getPosition () {
-        return position;
-    }
-
-    public void setPosition (Position position) {
-        this.position = position;
-    }
-
-    public Duration getHeuristicDistance () {
-        return heuristicDistance;
-    }
-
-    public void setHeuristicDistance (Duration n) {
-        this.heuristicDistance = n;//position.countHeuristicDistance ( this.position, n.position );
-    }
-
-    public Duration getCost () {
-        return cost;
-    }
-
-    public void setCost (Duration cost) {
-        this.cost = cost;
-    }
-
     public Map<Bow, Duration> getConnectedNodes () {
         return connectedNodes;
-    }
-
-    public void setConnectedNodes (Map<Bow, Duration> connectedNodes) {
-        this.connectedNodes = connectedNodes;
     }
 
     @Override

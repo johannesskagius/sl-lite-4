@@ -1,3 +1,9 @@
+/**
+ * @author josk3261 Johannes Skagius
+ * Stockholms universitet
+ * Kurs: ALDA - algoritmer och datastrukturer
+ */
+
 package com.company;
 
 import java.util.Objects;
@@ -25,32 +31,8 @@ public class Trip {
         return route_id;
     }
 
-    public void setRoute_id (long route_id) {
-        this.route_id = route_id;
-    }
-
-    public long getTrip_id () {
-        return trip_id;
-    }
-
-    public void setTrip_id (long trip_id) {
-        this.trip_id = trip_id;
-    }
-
     public String getTrip_headsign () {
         return trip_headsign;
-    }
-
-    public void setTrip_headsign (String trip_headsign) {
-        this.trip_headsign = trip_headsign;
-    }
-
-    public String getTrip_short_name () {
-        return trip_short_name;
-    }
-
-    public void setTrip_short_name (String trip_short_name) {
-        this.trip_short_name = trip_short_name;
     }
 
     @Override

@@ -1,3 +1,8 @@
+/**
+ * @author josk3261 Johannes Skagius
+ * Stockholms universitet
+ * Kurs: ALDA - algoritmer och datastrukturer
+ */
 package com.company;
 
 import java.util.HashMap;

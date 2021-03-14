@@ -1,3 +1,8 @@
+/**
+ * @author josk3261 Johannes Skagius
+ * Stockholms universitet
+ * Kurs: ALDA - algoritmer och datastrukturer
+ */
 package com.company;
 
 import java.time.Duration;
@@ -6,26 +11,17 @@ import java.util.*;
 
 //Inspired by https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
 public class AStar {
-    private Route route;
-    List<Node> open = new ArrayList<> ();
-    Map<Node, Duration> closed = new HashMap<> ();
-
     /**
      *
-     * @param route
-     */
-    public AStar (Route route) {
-        this.route = route;
-    }
-
-
-    /**
+     * This is the A* algoritm that finds a path between two positions in a graph. It needs two inparameters a start position and a target (end) node.
+     *
      *
      * @param start
      * @param end
      * @return
+     * @throws IllegalArgumentException ()
      */
-    public LinkedList<Node> getRoute2 (Node start,Node end) {
+    protected LinkedList<Node> getRoute (Node start,Node end) {
         Queue<Node> openSet = new PriorityQueue<> ();
         openSet.offer ( start );
         Map<Node, Node> cameFrom = new HashMap<> ();
@@ -52,7 +48,6 @@ public class AStar {
                 //if true the this path is better than the previous
                 if (tentative_gScore.compareTo ( gScore.getOrDefault ( c.getKey ().getConnectedTo (),defaultValue ) ) < 0) {
                     cameFrom.put ( c.getKey ().getConnectedTo (),current );
-                    // if(gScore.containsKey ( c.getKey ().getConnectedTo () )){}
                     gScore.put ( c.getKey ().getConnectedTo (),tentative_gScore );
                     fScore.put ( c.getKey ().getConnectedTo (),tentative_gScore.plus ( c.getKey ().getConnectedTo ().calcHeuristicLength ( end ) ) );
                     if (!openSet.contains ( c.getKey ().getConnectedTo () )) {
@@ -65,13 +60,13 @@ public class AStar {
     }
 
     /**
-     *
-     * @param cameFrom
-     * @param current
+     *This method is reconstructing the path generated from the A* algorithm above. It takes three in parameters
+     * @param cameFrom is a Map containing the previous Node and the Node it's going to.
+     * @param current Current is the latest position where the A* was at and when it's reaching this point Current node is going to be the target node.
      * @param end
-     * @return
+     * @return Returns a LinkedList containing the reconstructed and the closest path from the startposition to the end position.
      */
-    public LinkedList<Node> reconstructPath (Map<Node, Node> cameFrom,Node current, Node end) {
+    protected LinkedList<Node> reconstructPath (Map<Node, Node> cameFrom,Node current, Node end) {
         LinkedList<Node> route2 = new LinkedList<> ();
         route2.add ( current );
         while (cameFrom.containsKey ( current )) {

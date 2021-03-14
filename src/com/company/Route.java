@@ -1,14 +1,19 @@
+/**
+ * @author josk3261 Johannes Skagius
+ * Stockholms universitet
+ * Kurs: ALDA - algoritmer och datastrukturer
+ */
+
 package com.company;
 
 import java.sql.Time;
-import java.time.Duration;
 import java.time.LocalTime;
 import java.util.*;
 
 public class Route {
-    private SL_Trips_Routes sl_trips = new SL_Trips_Routes ();
+    private SL_Trips_Routes sl_trips;
     private List<Node> route = new LinkedList<> ();
-    private AStar aStar = new AStar ( this );
+    private AStar aStar = new AStar ();
     private Node startNode;
     private Node endNode;
 
@@ -25,7 +30,7 @@ public class Route {
     public String getRouteDescription (Node start,Node end) {
         Time d = Time.valueOf ( LocalTime.now () );
         Time firstDeparture = null;
-        route = aStar.getRoute2 ( start,end );
+        route = aStar.getRoute ( start,end );
         Collections.reverse ( route );
         Node previous = null;
         String s ="";
@@ -44,46 +49,5 @@ public class Route {
         }
         String x = "Travel from: " + route.get ( 0 ) + ", to: " + route.get ( route.size () - 1 ) +", Next departure: " + firstDeparture.toString ();
         return x+s;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Route getRoute () {
-        return this;
-    }
-
-    /**
-     *
-     * @param route
-     */
-    public void setRoute (ArrayList<Node> route) {
-        this.route = route;
-    }
-
-    /**
-     *
-     * @param node
-     * @return
-     */
-    public Node addNode (Node node) {
-        if (route.size () == 0)
-            startNode = node;
-        route.add ( node );
-        endNode = node;
-        return node;
-    }
-
-    public int getNrOfStops () {
-        return route.size ();
-    }
-
-    public Node getStartNode () {
-        return startNode;
-    }
-
-    public Node getEndNode () {
-        return endNode;
     }
 }

@@ -1,3 +1,8 @@
+/**
+ * @author josk3261 Johannes Skagius
+ * Stockholms universitet
+ * Kurs: ALDA - algoritmer och datastrukturer
+ */
 package com.company;
 
 import java.sql.Time;
@@ -26,14 +31,6 @@ public class Departures implements Comparable<Departures> {
 
     public Node getGoingTo () {
         return goingTo;
-    }
-
-    public void setGoingTo (Node goingTo) {
-        this.goingTo = goingTo;
-    }
-
-    public void setTrip_id (long trip_id) {
-        this.trip_id = trip_id;
     }
 
     public Time getDeparture_time () {

@@ -1,10 +1,15 @@
+/**
+ * @author josk3261 Johannes Skagius
+ * Stockholms universitet
+ * Kurs: ALDA - algoritmer och datastrukturer
+ */
+
 package com.company;
 
 import java.time.Duration;
 import java.util.Objects;
 
 public class Position {
-    //stop_id,stop_name,stop_lat,stop_lon,location_type
     private Double stop_lat;
     private Double stop_lon;
 
@@ -17,16 +22,8 @@ public class Position {
         return stop_lat;
     }
 
-    public void setStop_lat (Double stop_lat) {
-        this.stop_lat = stop_lat;
-    }
-
     public Double getStop_lon () {
         return stop_lon;
-    }
-
-    public void setStop_lon (Double stop_lon) {
-        this.stop_lon = stop_lon;
     }
 
     @Override
