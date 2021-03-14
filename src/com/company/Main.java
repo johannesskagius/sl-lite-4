@@ -1,8 +1,6 @@
-/**
- * @author josk3261 Johannes Skagius
- * Stockholms universitet
- * Kurs: ALDA - algoritmer och datastrukturer
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 package com.company;
 
 import java.util.HashMap;
@@ -17,10 +15,7 @@ public class Main {
     private Map<String, Long> nodesByName = new HashMap<> ();
     private SL_Trips_Routes sl_trips = new SL_Trips_Routes ();
 
-    /**
-     *
-     * @param args
-     */
+
     public static void main (String[] args) {
         Main m = new Main ();
         m.addSlRoutes ();
@@ -31,9 +26,7 @@ public class Main {
         System.out.println ( "Route found within: " + (System.currentTimeMillis () - start) + "ms" );
     }
 
-    /**
-     *
-     */
+
     private void loadTrips () {
         sl_trips.setTrips ( s.getTrips () );
     }
@@ -41,10 +34,6 @@ public class Main {
     private void addSlRoutes () {
         sl_trips.setRoutes ( s.getRoutes () );
     }
-
-    /**
-     *
-     */
 
     private void test () {
         Route r = new Route ( sl_trips );

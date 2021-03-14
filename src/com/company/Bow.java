@@ -1,8 +1,6 @@
-/**
- * @author josk3261 Johannes Skagius
- * Stockholms universitet
- * Kurs: ALDA - algoritmer och datastrukturer
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 
 package com.company;
 
@@ -15,33 +13,24 @@ import java.util.*;
  */
 public class Bow {
     private long trip_id;
-    private Duration cost;    // Ändra till tid / se till att det är samma enhet
+    private Duration cost;
     private Node connectedTo;
 
     /**
-     *
-     * @param weight
-     * @param connectedTo
-     * @param trip_id
+     * @param cost          is the cost of moving between the two connected nodes
+     * @param connectedTo   is the nod this bow is connected to.
+     * @param trip_id       is the ID which belongs to the trip.
      */
-    public Bow (Duration weight,Node connectedTo, long trip_id) {
+    public Bow (Duration cost,Node connectedTo, long trip_id) {
         this.connectedTo = connectedTo;
         this.trip_id = trip_id;
-        this.cost = weight;
+        this.cost = cost;
     }
 
-    /**
-     *
-     * @return
-     */
     public Duration getCost () {
         return cost;
     }
 
-    /**
-     *
-     * @return
-     */
     public Node getConnectedTo () {
         return connectedTo;
     }

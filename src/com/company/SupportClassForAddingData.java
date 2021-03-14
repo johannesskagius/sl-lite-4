@@ -1,8 +1,6 @@
-/**
- * @author josk3261 Johannes Skagius
- * Stockholms universitet
- * Kurs: ALDA - algoritmer och datastrukturer
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 
 package com.company;
 
@@ -17,6 +15,12 @@ import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+
+/**
+ * This is a support class which will load all the necessary information from the provided TXT files.
+ *
+ */
+
 public class SupportClassForAddingData {
     private TextFiles textFiles = new TextFiles ();
     private Map<Long, Node> nodes = new HashMap<> ();
@@ -26,12 +30,6 @@ public class SupportClassForAddingData {
     public SupportClassForAddingData (Main main) {
         this.main = main;
     }
-
-    /**
-     * TODO make notes
-     *
-     * @return
-     */
 
     public Map<Long, Node> addNodes () {
         try {
@@ -53,18 +51,12 @@ public class SupportClassForAddingData {
                 i++;
             }
             closeReaders ( inFile,in );
-        } catch (FileNotFoundException e) {
-            e.printStackTrace ();
         } catch (IOException e) {
             e.printStackTrace ();
         }
         return nodes;
     }
 
-    /**
-     *
-     * @param departures
-     */
     public void loadDepartures (Map<Long, ArrayList<Departures>> departures) {
         final int GOING_TO_NOD_ID = 0;
         for (Map.Entry<Long, ArrayList<Departures>> x : departures.entrySet ()) {       //O(N)
@@ -77,10 +69,6 @@ public class SupportClassForAddingData {
         }
     }
 
-    /**
-     *
-     * @return
-     */
     public Map<Long, Node> addBows () {
         Map<Long, ArrayList<Departures>> departures = new HashMap<> ();
         final int MS_TO_MIN = 60000;
@@ -106,8 +94,6 @@ public class SupportClassForAddingData {
                 previous = token; //Previous 3
             }
             closeReaders ( inFile,in );
-        } catch (FileNotFoundException e) {
-            e.printStackTrace ();
         } catch (IOException e) {
             e.printStackTrace ();
         }
@@ -115,11 +101,6 @@ public class SupportClassForAddingData {
         return nodes;
     }
 
-    /**
-     *
-     * @param s
-     * @return
-     */
     private Time stringToDate (String s) {
         final String PATTERN = "HH:mm:ss";
         Date date = Calendar.getInstance ().getTime ();
@@ -131,18 +112,14 @@ public class SupportClassForAddingData {
             e.printStackTrace ();
         }
         try {
-            date = format.parse ( s );
+            //date = format.parse ( s );
+            format.parse ( s );
         } catch (ParseException e) {
             e.printStackTrace ();
         }
         return t;
     }
 
-    /**
-     *
-     * @param inFile
-     * @param in
-     */
     private void closeReaders (FileReader inFile,BufferedReader in) {
         try {
             in.close ();
@@ -152,19 +129,6 @@ public class SupportClassForAddingData {
         }
     }
 
-    /**
-     *
-     * @param s
-     * @return
-     */
-    private Double stringToDouble (String s) {
-        return Double.parseDouble ( s );
-    }
-
-    /**
-     *
-     * @return
-     */
     public Map<String, Long> addNodesByName () {
         Map<String, Long> nodesByName = new HashMap<> ();
         for (Map.Entry<Long, Node> current : nodes.entrySet ()) {
@@ -173,10 +137,6 @@ public class SupportClassForAddingData {
         return nodesByName;
     }
 
-    /**
-     *
-     * @return
-     */
     public Map<Long, Trip> getTrips () {
         Map<Long, Trip> tripsInfo = new HashMap<> ();
         try {
@@ -186,7 +146,7 @@ public class SupportClassForAddingData {
             int i = 0;
             String[] previous = new String[0];
             while ((line = in.readLine ()) != null) {
-                String[] token = new String[0];
+                String[] token;
                 if (i != 0) {
                     token = line.split ( "," ); //regulert uttryck betyder splitta den här raden kring kommatecken.
                     tripsInfo.put ( Long.parseLong ( token[2] ), new Trip ( Long.parseLong ( token[0] ), Long.parseLong ( token[2] ), token[3], token[4] ));
@@ -202,11 +162,6 @@ public class SupportClassForAddingData {
         return tripsInfo;
     }
 
-    /**
-     *
-     * @return
-     */
-
     public Map<Long, String> getRoutes () {
         Map<Long, String> routes = new HashMap<> ();
         try {
@@ -216,7 +171,7 @@ public class SupportClassForAddingData {
             int i = 0;
             String[] previous = new String[0];
             while ((line = in.readLine ()) != null) {
-                String[] token = new String[0];
+                String[] token;
                 if (i != 0) {
                     token = line.split ( "," ); //regulert uttryck betyder splitta den här raden kring kommatecken.
                     String s = token[2] + ", " + token[3];
@@ -225,8 +180,6 @@ public class SupportClassForAddingData {
                 i++;
             }
             closeReaders ( inFile,in );
-        } catch (FileNotFoundException e) {
-            e.printStackTrace ();
         } catch (IOException e) {
             e.printStackTrace ();
         }

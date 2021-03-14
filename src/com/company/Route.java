@@ -1,8 +1,6 @@
-/**
- * @author josk3261 Johannes Skagius
- * Stockholms universitet
- * Kurs: ALDA - algoritmer och datastrukturer
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 
 package com.company;
 
@@ -22,17 +20,17 @@ public class Route {
     }
 
     /**
+     * This method summarizes the necessary information which should be returned to the user interface.
      *
-     * @param start
-     * @param end
-     * @return
+     * @param start the start position in the graph
+     * @param end the end position in the graph
+     * @return String filled with information about the route.
      */
     public String getRouteDescription (Node start,Node end) {
         Time d = Time.valueOf ( LocalTime.now () );
         Time firstDeparture = null;
         route = aStar.getRoute ( start,end );
         Collections.reverse ( route );
-        Node previous = null;
         String s ="";
         for (int i = 0; i < route.size (); i++) {
             Node ett = route.get ( i );

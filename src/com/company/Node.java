@@ -1,8 +1,6 @@
-/**
- * @author josk3261 Johannes Skagius
- * Stockholms universitet
- * Kurs: ALDA - algoritmer och datastrukturer
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 
 package com.company;
 
@@ -21,58 +19,43 @@ public class Node implements Comparable<Node> {
     private Map<Bow, Duration> connectedNodes = new HashMap<> ();
     private Map<Node, TreeSet<Departures>> departures = new HashMap<> ();
 
-
-    /**
-     *
-     * @param stop_id
-     * @param stop_name
-     * @param position
-     */
     public Node (Long stop_id,String stop_name,Position position) {
         this.stop_id = stop_id;
         this.stop_name = stop_name;
         this.position = position;
     }
 
-    /**
-     *
-     * @param n
-     * @param d
-     */
     public void addDepartures(Node n, Departures d){
         departures.computeIfAbsent (n, v-> new TreeSet<> () {
         }).add ( d );
     }
 
-    /**
-     *
-     * @param b
-     */
     public void addConnection(Bow b){
         this.cost = b.getCost ();
         connectedNodes.put ( b, b.getCost () );
     }
 
-    /**
-     *
-     * @param goingTo
-     * @return
-     */
     public Departures getDeparture(Node goingTo){
         return departures.get ( goingTo ).first ();
     }
 
+    /**
+     * Returnes the time for a specific departure
+     *
+     * @param d is a departure to node. This is used to find a departu
+     * @return the next departure based on after the System.Time time.
+     * @throws NullPointerException if there is no later departure. In that case send the first departure next day
+     */
     public Time getNextDepartureTime(Departures d){
-        Departures x = departures.get ( d.getGoingTo () ).higher ( d );
-        return departures.get ( d.getGoingTo () ).higher ( d ).getDeparture_time ();
+        Time t;
+        try {
+            t = departures.get ( d.getGoingTo () ).higher ( d ).getDeparture_time ();
+        }catch (NullPointerException e){
+            t = departures.get ( d.getGoingTo () ).first ().getDeparture_time ();
+        }
+        return t;
     }
 
-
-
-    /**
-     *
-     * @return
-     */
     public String getStop_name () {
         return stop_name;
     }

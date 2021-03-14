@@ -1,8 +1,6 @@
-/**
- * @author josk3261 Johannes Skagius
- * Stockholms universitet
- * Kurs: ALDA - algoritmer och datastrukturer
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 
 package com.company;
 
@@ -46,10 +44,12 @@ public class Position {
     }
 
     /**
+     * This method calculate sthe heuristic distance between two nodes.
      *
-     * @param from
-     * @param to
-     * @return
+     *
+     * @param from the first node
+     * @param to the second node
+     * @return the Duration in minutes.
      */
     public Duration countHeuristicDistance (Position from,Position to) {
         final int SQUARED = 2;

@@ -1,8 +1,6 @@
-/**
- * @author josk3261 Johannes Skagius
- * Stockholms universitet
- * Kurs: ALDA - algoritmer och datastrukturer
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 package com.company;
 
 import java.sql.Time;
@@ -14,10 +12,10 @@ public class Departures implements Comparable<Departures> {
     private Time departure_time;
 
     /**
-     *
-     * @param goingTo
-     * @param trip_id
-     * @param departure_time
+     * Constructs a departure containing the following information
+     * @param goingTo           To where the departure is going
+     * @param trip_id           The identification number of the trip.
+     * @param departure_time    The departure time
      */
     public Departures (Node goingTo,long trip_id,Time departure_time) {
         this.goingTo = goingTo;

@@ -1,24 +1,25 @@
-/**
- * @author josk3261 Johannes Skagius
- * Stockholms universitet
- * Kurs: ALDA - algoritmer och datastrukturer
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 package com.company;
 
 import java.time.Duration;
 import java.util.*;
 
-
-//Inspired by https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
 public class AStar {
     /**
+     * This method finds and returns the most time efficient path between two nodes.
+     * <p>
+     * Returns a LinkedList containing the most efficient path (in time) between two positions in a graph.
+     * This works in two steps. getRoute is the first method in the steps and is mapping the most efficient paths
+     * to the nodes it crosses, the second method {@link #reconstructPath(Map,Node)}
+     * reconstructs the closest path between the two given parameters
+     * <p>
+     * Inspired by https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
      *
-     * This is the A* algoritm that finds a path between two positions in a graph. It needs two inparameters a start position and a target (end) node.
-     *
-     *
-     * @param start
-     * @param end
-     * @return
+     * @param start is the start position of the A* search.
+     * @param end   is the target position for the A* search.
+     * @return The most efficient path between two positions.
      * @throws IllegalArgumentException ()
      */
     protected LinkedList<Node> getRoute (Node start,Node end) {
@@ -34,11 +35,11 @@ public class AStar {
         // D efault value infinity
         Map<Node, Duration> fScore = new HashMap<> ();
         fScore.put ( start,Duration.ofMinutes ( 2 ) );
-        Node current = null;
+        Node current;
         while (!openSet.isEmpty ()) {
             current = openSet.peek ();
             if (current.equals ( end )) {
-               return reconstructPath ( cameFrom,current, end );
+                return reconstructPath ( cameFrom,current );
             }
             openSet.poll ();
             Duration tentative_gScore;
@@ -60,19 +61,19 @@ public class AStar {
     }
 
     /**
-     *This method is reconstructing the path generated from the A* algorithm above. It takes three in parameters
+     * This method reconstructs the most efficient path between the two given positions.
+     *
      * @param cameFrom is a Map containing the previous Node and the Node it's going to.
-     * @param current Current is the latest position where the A* was at and when it's reaching this point Current node is going to be the target node.
-     * @param end
+     * @param current  Current is the latest position where the A* was at and when it's reaching this point Current node is going to be the target node.
      * @return Returns a LinkedList containing the reconstructed and the closest path from the startposition to the end position.
      */
-    protected LinkedList<Node> reconstructPath (Map<Node, Node> cameFrom,Node current, Node end) {
-        LinkedList<Node> route2 = new LinkedList<> ();
-        route2.add ( current );
+    protected LinkedList<Node> reconstructPath (Map<Node, Node> cameFrom,Node current) {
+        LinkedList<Node> closestRoute = new LinkedList<> ();
+        closestRoute.add ( current );
         while (cameFrom.containsKey ( current )) {
             current = cameFrom.get ( current );
-            route2.add ( current );
+            closestRoute.add ( current );
         }
-        return route2;
+        return closestRoute;
     }
 }

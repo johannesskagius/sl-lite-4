@@ -1,6 +1,6 @@
-/*
- * author josk3261 Johannes Skagius
- */
+//  @author josk3261 Johannes Skagius
+// Stockholms university
+// Kurs: ALDA - algoritmer och datastrukturer
 
 package com.company;
 
@@ -15,36 +15,13 @@ public class SL_Trips_Routes {
     private Map<Long, Trip> trips = new HashMap<> ();
 
     /**
+     * This method returns the connected information between a route and trips.
      *
-     * @param routeID
-     * @param s
-     */
-    public void addRoutes(long routeID, String s){
-        routes.put ( routeID, s ); // @param s is either long name or short name.
-    }
-
-    /**
-     *
-     * @param tripId
-     * @param s
-     */
-    public void addTrips(long tripId, Trip s){
-        trips.put ( tripId, s ); // @param s is trip_headsign
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Map<Long, String> getRoutes () {
-        return routes;
-    }
-
-
-    /**
-     *
-     * @param tripID
-     * @return
+     * A trip contain the necessary information between two nodes, departure from, departure to, duration, trip_id
+     * A route contains one to many trips and contains the information which will be presented to the user interface, like final destination, route id etc
+     * @see <a href="https://developers.google.com/transit/gtfs/reference"> Google Transit API </a>
+     * @param tripID is the ID for a trip, which is the key for routes.
+     * @return String containing route id and the headsign.
      */
     public String getTripInfo(long tripID){
         Trip t = trips.get ( tripID );
@@ -54,10 +31,6 @@ public class SL_Trips_Routes {
 
     public void setRoutes (Map<Long, String> routes) {
         this.routes = routes;
-    }
-
-    public Map<Long, Trip> getTrips () {
-        return trips;
     }
 
     public void setTrips (Map<Long, Trip> trips) {
