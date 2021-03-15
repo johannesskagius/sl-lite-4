@@ -21,9 +21,9 @@ import java.util.*;
  */
 
 public class SupportClassForAddingData {
-    private TextFiles textFiles = new TextFiles ();
-    private Map<Long, Node> nodes = new HashMap<> ();
-    private Run run;
+    private final TextFiles textFiles = new TextFiles ();
+    private final Map<Long, Node> nodes = new HashMap<> ();
+    private final Run run;
 
 
     public SupportClassForAddingData (Run run) {

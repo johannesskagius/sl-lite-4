@@ -7,10 +7,10 @@ package com.company;
 import java.util.Objects;
 
 public class Trip {
-    private long route_id;
-    private long trip_id;
-    private String trip_headsign;
-    private String trip_short_name;
+    private final long route_id;
+    private final long trip_id;
+    private final String trip_headsign;
+    private final String trip_short_name;
 
     public Trip (long route_id,long trip_id,String trip_headsign,String trip_short_name) {
         this.route_id = route_id;

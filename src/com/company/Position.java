@@ -8,8 +8,8 @@ import java.time.Duration;
 import java.util.Objects;
 
 public class Position {
-    private Double stop_lat;
-    private Double stop_lon;
+    private final Double stop_lat;
+    private final Double stop_lon;
 
     public Position (Double stop_lat,Double stop_lon) {
         this.stop_lat = stop_lat;

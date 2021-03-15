@@ -7,9 +7,9 @@ import java.sql.Time;
 import java.util.Date;
 
 public class Departures implements Comparable<Departures> {
-    private Node goingTo;
-    private long trip_id;
-    private Time departure_time;
+    private final Node goingTo;
+    private final long trip_id;
+    private final Time departure_time;
 
     /**
      * Constructs a departure containing the following information

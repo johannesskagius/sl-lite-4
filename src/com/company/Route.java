@@ -9,9 +9,9 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class Route {
-    private SL_Trips_Routes sl_trips;
+    private final SL_Trips_Routes sl_trips;
     private List<Node> route = new LinkedList<> ();
-    private AStar aStar = new AStar ();
+    private final AStar aStar = new AStar ();
     private Node startNode;
     private Node endNode;
 

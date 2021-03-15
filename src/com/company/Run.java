@@ -16,7 +16,7 @@ public class Run {
     SupportClassForAddingData s = new SupportClassForAddingData ( this );
     private Map<Long, Node> nodes = new HashMap<> ();
     private Map<String, Long> nodesByName = new HashMap<> ();
-    private SL_Trips_Routes sl_trips = new SL_Trips_Routes ();
+    private final SL_Trips_Routes sl_trips = new SL_Trips_Routes ();
 
 
     public static void main (String[] args) {

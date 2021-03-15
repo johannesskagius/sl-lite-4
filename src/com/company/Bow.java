@@ -12,9 +12,9 @@ import java.util.*;
  * TODO notes
  */
 public class Bow {
-    private long trip_id;
-    private Duration cost;
-    private Node connectedTo;
+    private final long trip_id;
+    private final Duration cost;
+    private final Node connectedTo;
 
     /**
      * @param cost          is the cost of moving between the two connected nodes

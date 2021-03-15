@@ -11,13 +11,13 @@ import java.time.Duration;
 import java.util.*;
 
 public class Node implements Comparable<Node> {
-    private Long stop_id;
-    private String stop_name;
-    private Position position;
+    private final Long stop_id;
+    private final String stop_name;
+    private final Position position;
     private Duration heuristicDistance;
     private Duration cost;
-    private Map<Bow, Duration> connectedNodes = new HashMap<> ();
-    private Map<Node, TreeSet<Departures>> departures = new HashMap<> ();
+    private final Map<Bow, Duration> connectedNodes = new HashMap<> ();
+    private final Map<Node, TreeSet<Departures>> departures = new HashMap<> ();
 
     public Node (Long stop_id,String stop_name,Position position) {
         this.stop_id = stop_id;
