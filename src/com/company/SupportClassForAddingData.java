@@ -12,7 +12,6 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -24,11 +23,11 @@ import java.util.*;
 public class SupportClassForAddingData {
     private TextFiles textFiles = new TextFiles ();
     private Map<Long, Node> nodes = new HashMap<> ();
-    private Main main;
+    private Run run;
 
 
-    public SupportClassForAddingData (Main main) {
-        this.main = main;
+    public SupportClassForAddingData (Run run) {
+        this.run = run;
     }
 
     public Map<Long, Node> addNodes () {

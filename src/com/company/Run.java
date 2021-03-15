@@ -12,7 +12,7 @@ import java.util.Scanner;
 /**
  *
  */
-public class Main {
+public class Run {
     SupportClassForAddingData s = new SupportClassForAddingData ( this );
     private Map<Long, Node> nodes = new HashMap<> ();
     private Map<String, Long> nodesByName = new HashMap<> ();
@@ -20,7 +20,7 @@ public class Main {
 
 
     public static void main (String[] args) {
-        Main m = new Main ();
+        Run m = new Run ();
         m.addSlRoutes ();
         m.loadTrips ();
         m.addNodes ();
@@ -51,7 +51,9 @@ public class Main {
      * Chooses to nodes randomly, finds the most time efficient path between them and record the time it took to find the path.
      */
     private void efficiencyTest (int choice) {
-        long effiency = 0;
+        long startTime = 0;
+        long endTime = 0;
+        long effiency= 0;
         String s = "";
         Route r = new Route ( sl_trips );
         Random random = new Random ();
@@ -62,13 +64,14 @@ public class Main {
             fin = random.nextInt ( 443 );
             Node startNode = getNode ( start );
             Node finNode = getNode ( fin );
-            long startTime = System.currentTimeMillis ();
+            startTime = System.currentTimeMillis ();
             s = r.getRouteDescription ( startNode,finNode );
-            long endTime = System.currentTimeMillis ();
+            endTime = System.currentTimeMillis ();
             effiency += (endTime - startTime);
         }
         if (choice == 2) {
             System.out.println ( s );
+            System.out.println ( "Found in: " + (endTime - startTime)+"ms"  );
         } else {
             System.out.println ( "average: " + effiency / choice + "ms" );
         }
