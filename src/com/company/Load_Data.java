@@ -20,13 +20,13 @@ import java.util.*;
  *
  */
 
-public class SupportClassForAddingData {
+public class Load_Data {
     private final TextFiles textFiles = new TextFiles ();
     private final Map<Long, Node> nodes = new HashMap<> ();
     private final Run run;
 
 
-    public SupportClassForAddingData (Run run) {
+    public Load_Data (Run run) {
         this.run = run;
     }
 
@@ -86,7 +86,7 @@ public class SupportClassForAddingData {
                 if ((previous.length > 0) && previous[0].equals ( token[0] )) {
                     long d = stringToDate ( token[1] ).getTime () / MS_TO_MIN - stringToDate ( previous[2] ).getTime () / MS_TO_MIN;
                     Duration l = Duration.ofMinutes ( d );
-                    Bow b = new Bow ( l,nodes.get ( Long.parseLong ( token[3] ) ), Long.parseLong ( token[0] ) );
+                    Bow b = new Bow ( l,nodes.get ( Long.parseLong ( token[3] ) ) );
                     nodes.get ( Long.parseLong ( previous[3] ) ).addConnection ( b );
                     departures.computeIfAbsent ( Long.parseLong ( previous[3] ), v-> new ArrayList<> () ).add ( new Departures ( nodes.get ( Long.parseLong ( token[3] ) ) ,Long.parseLong ( token[0] ), stringToDate ( token[2] ) ) );
                 }
@@ -153,8 +153,6 @@ public class SupportClassForAddingData {
                 i++;
             }
             closeReaders ( inFile,in );
-        } catch (FileNotFoundException e) {
-            e.printStackTrace ();
         } catch (IOException e) {
             e.printStackTrace ();
         }

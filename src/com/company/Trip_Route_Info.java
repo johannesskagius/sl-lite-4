@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  *
  */
-public class SL_Trips_Routes {
+public class Trip_Route_Info {
     private Map<Long, String> routes = new HashMap<> ();
     private Map<Long, Trip> trips = new HashMap<> ();
 

@@ -13,11 +13,10 @@ import java.util.Scanner;
  *
  */
 public class Run {
-    SupportClassForAddingData s = new SupportClassForAddingData ( this );
+    private final Trip_Route_Info tripInfo = new Trip_Route_Info ();
+    private Load_Data loadData = new Load_Data ( this );
     private Map<Long, Node> nodes = new HashMap<> ();
     private Map<String, Long> nodesByName = new HashMap<> ();
-    private final SL_Trips_Routes sl_trips = new SL_Trips_Routes ();
-
 
     public static void main (String[] args) {
         Run m = new Run ();
@@ -28,15 +27,15 @@ public class Run {
     }
 
     private void loadTrips () {
-        sl_trips.setTrips ( s.getTrips () );
+        tripInfo.setTrips ( loadData.getTrips () );
     }
 
     private void addSlRoutes () {
-        sl_trips.setRoutes ( s.getRoutes () );
+        tripInfo.setRoutes ( loadData.getRoutes () );
     }
 
     private void test () {
-        Route r = new Route ( sl_trips );
+        Route r = new Route ( tripInfo );
         long startID = nodesByName.get ( "Gullmarsplan T-bana" );
         long finID = nodesByName.get ( "Stockholm Östermalmstorg" );
         Node start = nodes.get ( startID );
@@ -53,9 +52,9 @@ public class Run {
     private void efficiencyTest (int choice) {
         long startTime = 0;
         long endTime = 0;
-        long effiency= 0;
+        long effiency = 0;
         String s = "";
-        Route r = new Route ( sl_trips );
+        Route r = new Route ( tripInfo );
         Random random = new Random ();
         int start;
         int fin;
@@ -71,7 +70,7 @@ public class Run {
         }
         if (choice == 2) {
             System.out.println ( s );
-            System.out.println ( "Found in: " + (endTime - startTime)+"ms"  );
+            System.out.println ( "Found in: " + (endTime - startTime) + "ms" );
         } else {
             System.out.println ( "average: " + effiency / choice + "ms" );
         }
@@ -89,7 +88,7 @@ public class Run {
     }
 
     private void addNodes () {
-        SupportClassForAddingData s = new SupportClassForAddingData ( this );
+        Load_Data s = new Load_Data ( this );
         nodes = s.addNodes ();
         nodesByName = s.addNodesByName ();
         nodes = s.addBows ();
@@ -97,7 +96,7 @@ public class Run {
 
     private void run () {
         Scanner scanner = new Scanner ( System.in );
-        int choice = 0;
+        int choice;
         do {
             System.out.println ( "What would you like to do?" );
             System.out.println ( "Enter: 1 printing the route guide between two randomized stations" );

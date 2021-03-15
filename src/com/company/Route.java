@@ -6,46 +6,51 @@ package com.company;
 
 import java.sql.Time;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Route {
-    private final SL_Trips_Routes sl_trips;
-    private List<Node> route = new LinkedList<> ();
+    private final Trip_Route_Info tripInfo;
     private final AStar aStar = new AStar ();
+    private List<Node> route = new LinkedList<> ();
     private Node startNode;
     private Node endNode;
 
-    public Route (SL_Trips_Routes sl_trips) {
-        this.sl_trips = sl_trips;
+    public Route (Trip_Route_Info tripInfo) {
+        this.tripInfo = tripInfo;
     }
 
     /**
      * This method summarizes the necessary information which should be returned to the user interface.
      *
      * @param start the start position in the graph
-     * @param end the end position in the graph
+     * @param end   the end position in the graph
      * @return String filled with information about the route.
      */
     public String getRouteDescription (Node start,Node end) {
         Time d = Time.valueOf ( LocalTime.now () );
         Time firstDeparture = null;
         route = aStar.getRoute ( start,end );
-        Collections.reverse ( route );
-        String s ="";
+        StringBuilder s = new StringBuilder ();
         for (int i = 0; i < route.size (); i++) {
             Node ett = route.get ( i );
-            Node tva = null;
+            Node tva;
             if (i != route.size () - 1) {
                 tva = route.get ( i + 1 );
                 long trip = ett.getDeparture ( tva ).getTrip_id ();
-                d = ett.getNextDepartureTime ( new Departures ( tva, trip, d ) );
-                if(firstDeparture == null) firstDeparture =d;
-                s += "\n" + i + ", " + sl_trips.getTripInfo ( trip );
+                d = ett.getNextDepartureTime ( new Departures ( tva,trip,d ) );
+                if (firstDeparture == null)
+                    firstDeparture = d;
+                s.append ( "\n" ).append ( i ).append ( ", " ).append ( tripInfo.getTripInfo ( trip ) );
             } else {
-                s += "\n" + i + ", " + ett;
+                s.append ( "\n" ).append ( i ).append ( ", " ).append ( ett );
             }
         }
-        String x = "Travel from: " + route.get ( 0 ) + ", to: " + route.get ( route.size () - 1 ) +", Next departure: " + firstDeparture.toString ();
-        return x+s;
+        String complete = "";
+        if(firstDeparture != null)
+         complete = "Travel from: " + route.get ( 0 ) + ", to: " + route.get ( route.size () - 1 ) + ", Next departure: " + firstDeparture.toString ();
+        else // firstDeparture.toString is null the times the randomly selected nodes are the same.
+            complete = "Travel from: " + route.get ( 0 ) + ", to: " + route.get ( route.size () - 1 );
+        return complete + s;
     }
 }

@@ -15,14 +15,17 @@ public class AStar {
      * to the nodes it crosses, the second method {@link #reconstructPath(Map,Node)}
      * reconstructs the closest path between the two given parameters
      * <p>
-     * Inspired by https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
      *
      * @param start is the start position of the A* search.
      * @param end   is the target position for the A* search.
      * @return The most efficient path between two positions.
-     * @throws IllegalArgumentException ()
+     * @throws IllegalArgumentException if there is no matching end node or no connection to the end node.
+     * @see <a href="https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode"> for more general information about the A*
+     * algorithm </a>
      */
     protected LinkedList<Node> getRoute (Node start,Node end) {
+        LinkedList<Node> result = null;
+        boolean finished = false;
         Queue<Node> openSet = new PriorityQueue<> ();
         openSet.offer ( start );
         Map<Node, Node> cameFrom = new HashMap<> ();
@@ -39,7 +42,9 @@ public class AStar {
         while (!openSet.isEmpty ()) {
             current = openSet.peek ();
             if (current.equals ( end )) {
-                return reconstructPath ( cameFrom,current );
+                result = reconstructPath ( cameFrom,current );
+                finished = true;
+                break;
             }
             openSet.poll ();
             Duration tentative_gScore;
@@ -57,7 +62,10 @@ public class AStar {
                 }
             }
         }
-        throw new IllegalArgumentException ();
+        if (!finished) {
+            throw new IllegalArgumentException ();
+        }
+        return result;
     }
 
     /**
@@ -74,6 +82,7 @@ public class AStar {
             current = cameFrom.get ( current );
             closestRoute.add ( current );
         }
+        Collections.reverse ( closestRoute );
         return closestRoute;
     }
 }

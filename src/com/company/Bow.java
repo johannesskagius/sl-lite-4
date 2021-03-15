@@ -12,18 +12,15 @@ import java.util.*;
  * TODO notes
  */
 public class Bow {
-    private final long trip_id;
     private final Duration cost;
     private final Node connectedTo;
 
     /**
      * @param cost          is the cost of moving between the two connected nodes
      * @param connectedTo   is the nod this bow is connected to.
-     * @param trip_id       is the ID which belongs to the trip.
      */
-    public Bow (Duration cost,Node connectedTo, long trip_id) {
+    public Bow (Duration cost,Node connectedTo) {
         this.connectedTo = connectedTo;
-        this.trip_id = trip_id;
         this.cost = cost;
     }
 
